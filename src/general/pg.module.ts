@@ -5,10 +5,11 @@ import { Module } from '@nestjs/common';
 const pgProvider = {
   provide: PG_CONNECTION,
   useValue: new Pool({
-    user: 'postgres',
-    password: 'postgres',
-    host: 'localhost',
-    port: 5432,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASS,
+    database: process.env.PG_DB,
+    host: process.env.PG_HOST,
+    port: +process.env.PG_PORT,
   }),
 };
 

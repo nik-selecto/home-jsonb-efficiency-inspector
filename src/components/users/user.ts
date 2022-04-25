@@ -15,6 +15,11 @@ export class User implements FullUserInterface {
   _id: string | Types.ObjectId;
   createdAt: string;
   updatedAt: string;
+
+  @Prop({
+    required: true,
+  })
+  password: string;
 }
 
 export type UserDocument = User & MongooseDocumentType<User>;
