@@ -10,7 +10,9 @@ import { UsersModule } from './components/users/users.module';
   imports: [
     BullModule.forRoot({}),
     RabbitModule,
-    MongooseModule.forRoot('mongodb://localhost:27017'),
+    MongooseModule.forRoot(
+      'mongodb://localhost:27017/home-jsonb-efficiency-inspector',
+    ),
     UsersModule,
   ],
   controllers: [AppController],

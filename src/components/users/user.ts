@@ -1,12 +1,11 @@
-import { TimestampInterface } from '../../general/timestamp.interface';
-import { MongoIdInterface } from '../../general/mongo-id.interface';
 import { Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { generateMongoSchema } from '../../general/generate-mongo-schema.fn';
 import { MongooseDocumentType } from '../../general/mongoose-document.type';
+import { FullUserInterface } from './dto/full-user.interface';
 
 @Schema(generateMongoSchema())
-export class User implements TimestampInterface, MongoIdInterface {
+export class User implements FullUserInterface {
   @Prop({
     unique: true,
     required: true,
