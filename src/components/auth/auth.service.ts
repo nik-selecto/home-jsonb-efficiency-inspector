@@ -51,7 +51,7 @@ export class AuthService {
         return this.generateJwtTokens(payload);
     }
 
-    // TODO more clearly types for payloads etc.
+    // TODO more clearly dto for payloads etc.
     private generateJwtTokens(payload: Omit<JwtPayloadType, '_id'>) {
         const _payload = {
             id: payload.id,
@@ -61,7 +61,7 @@ export class AuthService {
         return {
             _id: payload.id,
             email: payload.email,
-            access: this.jwtService.sign(_payload, {secret: this.config.get('JWT_ACCESS_SECRET'), expiresIn: '40s'}),
+            access: this.jwtService.sign(_payload, {secret: this.config.get('JWT_ACCESS_SECRET'), expiresIn: '3m'}),
             refresh: this.jwtService.sign(_payload, {secret: this.config.get('JWT_REFRESH_SECRET'), expiresIn: '3d'}),
         };
     }
