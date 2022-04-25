@@ -8,6 +8,7 @@ import {ProjectConfigType} from "../../general/config.type";
 import {JwtService} from "@nestjs/jwt";
 import {ConfigService} from "@nestjs/config";
 import {LoginResDto} from "./dto/login.res.dto";
+import {RefreshResDto} from "./dto/refresh.res.dto";
 
 @Injectable()
 export class AuthService {
@@ -42,21 +43,26 @@ export class AuthService {
         };
     }
 
-    async refresh(token: string) {
+    refresh(token: string): RefreshResDto {
         const payload: Omit<JwtPayloadType, '_id'> = this.jwtService.verify(token, {secret: this.config.get('JWT_REFRESH_SECRET')});
 
         if (!payload.email) throw new UnauthorizedException();
 
-        return {
-            ...payload,
-            ...this.generateJwtTokens(payload),
-        };
+        return this.generateJwtTokens(payload);
     }
 
-    private generateJwtTokens(payload: Omit<JwtPayloadType, '_id'>): { access: string, refresh: string } {
+    // TODO more clearly types for payloads etc.
+    private generateJwtTokens(payload: Omit<JwtPayloadType, '_id'>) {
+        const _payload = {
+            id: payload.id,
+            email: payload.email,
+        };
+
         return {
-            access: this.jwtService.sign(payload, {secret: this.config.get('JWT_ACCESS_SECRET'), expiresIn: '40s'}),
-            refresh: this.jwtService.sign(payload, {secret: this.config.get('JWT_REFRESH_SECRET'), expiresIn: '3d'}),
+            _id: payload.id,
+            email: payload.email,
+            access: this.jwtService.sign(_payload, {secret: this.config.get('JWT_ACCESS_SECRET'), expiresIn: '40s'}),
+            refresh: this.jwtService.sign(_payload, {secret: this.config.get('JWT_REFRESH_SECRET'), expiresIn: '3d'}),
         };
     }
 

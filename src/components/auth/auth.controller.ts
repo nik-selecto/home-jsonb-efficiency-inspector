@@ -15,7 +15,6 @@ export class AuthController {
 
   @Post('refresh')
   public async refresh(@Body() data: RefreshDto) {
-    console.log(data);
     return this.authService.refresh(data.refresh);
   }
 }
