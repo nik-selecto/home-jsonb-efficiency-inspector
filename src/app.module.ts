@@ -5,6 +5,7 @@ import { BullModule } from '@nestjs/bull';
 import { RabbitModule } from './components/rabbit/rabbit.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './components/users/users.module';
+import { AuthModule } from './components/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './components/users/users.module';
       'mongodb://localhost:27017/home-jsonb-efficiency-inspector',
     ),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
