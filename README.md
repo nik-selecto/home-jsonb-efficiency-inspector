@@ -3,7 +3,7 @@
 [Jsonb efficiency inspector](https://github.com/nestjs/nest)  
 Server for testing improvement of your postgres queries that  refer to table with "data" column of "jsonb" type.
 * easy crud-operations with table and their indexes
-* generating and json-tree-structure for "data" column
+* generating any json-tree-structure for "data" column
 * seeding this table
 * inspect query's statistic
 * compare logs of the same queries on different tables/indexes/data
