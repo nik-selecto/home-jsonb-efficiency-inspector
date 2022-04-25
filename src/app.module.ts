@@ -19,7 +19,7 @@ import { ProjectConfigType } from './general/config.type';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService<ProjectConfigType>) => ({
-        uri: `mongodb://${config.get('MONGO_PORT')}:${config.get(
+        uri: `mongodb://${config.get('MONGO_HOST')}:${config.get(
           'MONGO_PORT',
         )}/${config.get('MONGO_DB')}`,
       }),
