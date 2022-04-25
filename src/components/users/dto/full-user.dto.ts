@@ -1,6 +1,12 @@
 import { FullUserInterface } from './full-user.interface';
 import { Types } from 'mongoose';
-import { IsDate, IsEmail, IsMongoId } from 'class-validator';
+import {
+  IsAlphanumeric,
+  IsDate,
+  IsEmail,
+  IsMongoId,
+  Length,
+} from 'class-validator';
 
 export class FullUserDto implements FullUserInterface {
   @IsEmail()
@@ -13,4 +19,8 @@ export class FullUserDto implements FullUserInterface {
 
   @IsDate()
   updatedAt: string;
+
+  @IsAlphanumeric()
+  @Length(8, 32)
+  password: string;
 }

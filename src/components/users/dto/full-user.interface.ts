@@ -5,4 +5,5 @@ export interface FullUserInterface
   extends TimestampInterface,
     MongoIdInterface {
   email: string;
+  password: string;
 }
