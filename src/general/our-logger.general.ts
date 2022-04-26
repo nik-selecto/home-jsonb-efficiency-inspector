@@ -3,13 +3,14 @@ import * as Bull from 'bull';
 import {Queue} from 'bull';
 import {QueueEnum} from "./queue.enum";
 import {LogPayloadType} from "../mini-apps/logger/log-payload-type";
+import {OurAppEnum} from "./our-app.enum";
 
 
 export class OurLoggerGeneral implements LoggerService {
-    private constructor(private appName: string, private logQueue: Queue) {
+    private constructor(private appName: OurAppEnum, private logQueue: Queue) {
     }
 
-    public static async init(appName: string) {
+    public static async init(appName: OurAppEnum) {
         const logProduccerQueue = new Bull(QueueEnum.LOG);
 
         return new OurLoggerGeneral(appName, logProduccerQueue);

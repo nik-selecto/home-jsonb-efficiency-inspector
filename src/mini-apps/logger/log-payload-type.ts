@@ -1,5 +1,7 @@
+import {OurAppEnum} from "../../general/our-app.enum";
+
 export type LogPayloadType = {
-    message: any,
+    message: string,
     optionalParams?: any[],
-    fromApp: string,
+    fromApp: OurAppEnum,
 }
