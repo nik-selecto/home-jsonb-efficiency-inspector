@@ -1,17 +1,19 @@
 import {NestFactory} from '@nestjs/core';
-import {RabbitDbCreatorModule} from './rabbit-db-creator.module';
 import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
+import {LoggerModule} from "./logger.module";
 import {OurLoggerGeneral} from "../../general/our-logger.general";
 import {OurAppEnum} from "../../general/our-app.enum";
 
 async function miniBootstrap() {
-    const logger = await OurLoggerGeneral.init(OurAppEnum.RABBIT_DB_CREATOR);
+    const logger = await OurLoggerGeneral.init(OurAppEnum.OUR_LOGGER);
     const app = await NestFactory.create<NestFastifyApplication>(
-        RabbitDbCreatorModule,
+        LoggerModule,
         new FastifyAdapter(),
-        {logger},
+        {
+            logger,
+        }
     );
-    await app.listen(3002);
+    await app.listen(3001);
 }
 
 miniBootstrap().catch((error) => {
