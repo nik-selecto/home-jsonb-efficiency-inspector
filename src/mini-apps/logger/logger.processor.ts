@@ -4,32 +4,30 @@ import {ConsoleLogger} from "@nestjs/common";
 import {JOBS_MAPPER} from "../../general/jobs-mapper.constant";
 import {LogPayloadType} from "./log-payload-type";
 import {Job} from "bull";
-import {LogLevelType} from "./log-level.type";
 
 @Processor(QueueEnum.LOG)
 export class LoggerProcessor extends ConsoleLogger {
     @Process(JOBS_MAPPER[QueueEnum.LOG].error)
-    error(job: Job<LogPayloadType<'error'>>) {
-        super.error(...this.messageBuilder(job.data));
+    error(job: Job<LogPayloadType>) {
+        const [message, optionalParams] = this.messageBuilder(job.data);
+        super.error(message, ...optionalParams);
     }
     
     @Process(JOBS_MAPPER[QueueEnum.LOG].log)
-    log(job: Job<LogPayloadType<'log'>>) {
-        super.log(...this.messageBuilder(job.data));
+    log(job: Job<LogPayloadType>) {
+        const [message, optionalParams] = this.messageBuilder(job.data);
+        super.log(message, ...optionalParams);
     }
     
     @Process(JOBS_MAPPER[QueueEnum.LOG].warn)
-    warn(job: Job<LogPayloadType<'warn'>>) {
-        super.warn(...this.messageBuilder(job.data));
+    warn(job: Job<LogPayloadType>) {
+        const [message, optionalParams] = this.messageBuilder(job.data);
+        super.warn(message, ...optionalParams);
     }
     
-    private messageBuilder(data: LogPayloadType<LogLevelType>) {
-        const { fromApp, jobName, jobUuid, message, queueName, stack, context } = data;
+    private messageBuilder(data: LogPayloadType) {
+        const { fromApp, optionalParams, message } = data;
         
-        return [
-            `=>>> ${fromApp} | ${queueName} | ${jobName} | ${jobUuid} : ${message}`,
-            stack,
-            context,
-        ] as [any, string | undefined, string | undefined];
+        return [`from ${fromApp}: ${message}`, optionalParams];
     }
 }

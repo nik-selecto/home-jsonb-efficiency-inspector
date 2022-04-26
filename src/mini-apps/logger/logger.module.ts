@@ -3,6 +3,7 @@ import {BullModule} from '@nestjs/bull';
 import {PgModule} from '../../general/pg.module';
 import {QueueEnum} from '../../general/queue.enum';
 import {Config} from '../../general/config.module';
+import {LoggerProcessor} from "./logger.processor";
 
 @Module({
     imports: [
@@ -11,7 +12,7 @@ import {Config} from '../../general/config.module';
         BullModule.registerQueue({name: QueueEnum.LOG}),
         PgModule,
     ],
-    providers: [],
+    providers: [LoggerProcessor],
 })
 export class LoggerModule {
 }
