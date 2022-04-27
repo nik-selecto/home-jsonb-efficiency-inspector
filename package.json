@@ -8,8 +8,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "mini:rabbit": "npm run build && node dist/mini-apps/rabbit-db-creator/rabbit-db-creator.main.js",
-    "mini:logger": "npm run build && node dist/mini-apps/logger/logger.main.js",
+    "mini:rabbit": "nest start src/mini-apps/rabbit-db-creator/rabbit-db-creator.main.js --watch",
+    "mini:logger": "nest start src/mini-apps/logger/logger.main.js --watch",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
