@@ -10,8 +10,15 @@ export class OurLoggerGeneral implements LoggerService {
     private constructor(private appName: OurAppEnum, private logQueue: Queue) {
     }
 
-    public static async init(appName: OurAppEnum) {
+    public static async init(appName: OurAppEnum, freshLogs = false) {
         const logProduccerQueue = new Bull(QueueEnum.LOG);
+
+        if (freshLogs) {
+            await Promise.all((['completed', 'wait', 'active', 'delayed', 'failed', 'paused'] as const)
+                .map((status) => {
+                    return logProduccerQueue.clean(0, status);
+                }));
+        }
 
         return new OurLoggerGeneral(appName, logProduccerQueue);
     }
@@ -33,11 +40,11 @@ export class OurLoggerGeneral implements LoggerService {
         jobName?: string,
         jobUuid?: string,
     } = {}, ...optionalParams: any[]): LogPayloadType {
-        const { queueName, jobName, jobUuid } = options;
+        const {queueName, jobName, jobUuid} = options;
 
         return {
             message,
-            optionalParams: [...[queueName, jobName,  jobUuid].filter((i) => i), ...optionalParams],
+            optionalParams: [...[queueName, jobName, jobUuid].filter((i) => i), ...optionalParams],
             fromApp: this.appName,
         };
     }

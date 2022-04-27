@@ -5,7 +5,7 @@ import {OurLoggerGeneral} from "../../general/our-logger.general";
 import {OurAppEnum} from "../../general/our-app.enum";
 
 async function miniBootstrap() {
-    const logger = await OurLoggerGeneral.init(OurAppEnum.OUR_LOGGER);
+    const logger = await OurLoggerGeneral.init(OurAppEnum.OUR_LOGGER, true);
     const app = await NestFactory.create<NestFastifyApplication>(
         LoggerModule,
         new FastifyAdapter(),
