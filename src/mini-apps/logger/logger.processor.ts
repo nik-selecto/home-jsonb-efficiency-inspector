@@ -5,6 +5,7 @@ import {LogPayloadType} from "./log-payload-type";
 import {Job} from "bull";
 import {OurAppEnum} from "../../general/our-app.enum";
 import * as chalk from 'chalk';
+import { inspect } from 'util';
 
 // TODO provide colors etc.
 // TODO provide dynamic configuration through redis(bull)
@@ -18,7 +19,7 @@ const appBgColors: Record<OurAppEnum, string> = {
 const lineColors = {
     log: '#77c862',
     warn: '#fdeb1b',
-    error: '#e41818',
+    error: '#ff4d5b',
 };
 
 @Processor(QueueEnum.LOG)
@@ -44,8 +45,15 @@ export class LoggerProcessor {
         const _jobName = jobName ? `/${jobName}` : '';
         const _queueName = queueName ? `/${queueName}` : '';
         const _jobUuid = jobId ? `/${jobId}` : '';
-        const _message = chalk.hex(lineColors[type])(message);
+        const color = chalk.hex(lineColors[type]);
+        const _message = typeof message === 'string'
+        ? color(message)
+            : chalk.bold(`${inspect(message, {
+            showHidden: false,
+            depth: null,
+            colors: true,
+        })}`);
         
-        console[type](`${_fromApp}${_queueName}${_jobName}${_jobUuid}: ${_message}`);
+        console[type](`${_fromApp}${_queueName}${_jobName}${_jobUuid}:`, color(_message));
     }
 }

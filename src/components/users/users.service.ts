@@ -6,6 +6,7 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {ConfigService} from "@nestjs/config";
 import {ProjectConfigType} from "../../general/config.type";
 import * as bcrypt from 'bcrypt';
+import { FilterQuery, UpdateQuery } from 'mongoose';
 
 @Module({})
 export class UsersService {
@@ -26,8 +27,11 @@ export class UsersService {
         return { email: user.email, _id: user._id };
     }
 
-    async findOne(query: Partial<User>, projection: Partial<(Record<keyof User, 1>) | (Record<keyof User, -1>)> = { password: -1 }, options: QueryOptions<User> = {}) {
+    async findOne(query: FilterQuery<User>, projection: Partial<(Record<keyof User, 1>) | (Record<keyof User, -1>)> = { password: -1 }, options: QueryOptions<User> = {}) {
         return this.userModel.findOne(query, projection, options).lean();
     }
 
+    async updateOne(query: FilterQuery<User>, updates: UpdateQuery<User>) {
+        return this.userModel.updateOne(query, updates).lean();
+    }
 }

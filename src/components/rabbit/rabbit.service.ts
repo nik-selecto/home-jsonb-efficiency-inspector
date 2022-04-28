@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { QueueEnum } from '../../general/queue.enum';
 import { Queue } from 'bull';
@@ -7,6 +7,7 @@ import {CreateDbProcessType} from "./types/create-db-process.type";
 import {Types} from "mongoose";
 import {UsersService} from "../users/users.service";
 import {ReadyOrJobIdType} from "../../general/ready-or-job-id.type.general";
+
 
 @Injectable()
 export class RabbitService {

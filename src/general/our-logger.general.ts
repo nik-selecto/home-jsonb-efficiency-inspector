@@ -14,22 +14,26 @@ export class OurLoggerGeneral implements LoggerService {
     public static async init(appName: OurAppEnum) {
         const logProduccerQueue = new Bull(QueueEnum.LOG);
 
+        await Promise.all((['completed', 'wait', 'active', 'delayed', 'failed', 'paused'] as const).map((status) => {
+            logProduccerQueue.clean(0, status);
+        }));
+
         return new OurLoggerGeneral(appName, logProduccerQueue);
     }
 
     error(message: any, params: ParamsType = {}): any {
-        this.send(message, { fromApp: this.appName , ...params }, 'error');
+        this.send(message, {fromApp: this.appName, ...params}, 'error');
     }
 
     log(message: any, params: ParamsType = {}): any {
-        this.send(message, { fromApp: this.appName , ...params }, 'log');
+        this.send(message, {fromApp: this.appName, ...params}, 'log');
     }
 
     warn(message: any, params: ParamsType = {}): any {
-        this.send(message, { fromApp: this.appName , ...params }, 'warn');
+        this.send(message, {fromApp: this.appName, ...params}, 'warn');
     }
 
     private send(message: string, params: ParamsType, type: 'error' | 'warn' | 'log') {
-        this.logQueue.add(type, { message, ...params });
+        this.logQueue.add(type, {message, ...params});
     }
 }
