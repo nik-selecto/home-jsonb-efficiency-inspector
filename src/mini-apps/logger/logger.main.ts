@@ -1,19 +1,15 @@
 import {NestFactory} from '@nestjs/core';
-import {FastifyAdapter, NestFastifyApplication} from '@nestjs/platform-fastify';
 import {LoggerModule} from "./logger.module";
 import {OurLoggerGeneral} from "../../general/our-logger.general";
 import {OurAppEnum} from "../../general/our-app.enum";
 
 async function miniBootstrap() {
-    const logger = await OurLoggerGeneral.init(OurAppEnum.OUR_LOGGER, true);
-    const app = await NestFactory.create<NestFastifyApplication>(
+    await NestFactory.createApplicationContext(
         LoggerModule,
-        new FastifyAdapter(),
         {
-            logger,
+            logger: await OurLoggerGeneral.init(OurAppEnum.OUR_LOGGER),
         }
     );
-    await app.listen(3001);
 }
 
 miniBootstrap().catch((error) => {

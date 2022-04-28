@@ -12,27 +12,27 @@ import {Job} from "bull";
 export class LoggerProcessor {
     @Process(JOBS_MAPPER[QueueEnum.LOG].error)
     error(job: Job<LogPayloadType>) {
-        const [message, optionalParams] = this.messageBuilder(job.data);
-        console.log(message, optionalParams);
+        this.print(job.data, 'error');
     }
 
     @Process(JOBS_MAPPER[QueueEnum.LOG].log)
     log(job: Job<LogPayloadType>) {
-        const [message, optionalParams] = this.messageBuilder(job.data);
-        console.log(message);
-
-        if (optionalParams.length) console.log(...optionalParams);
+        this.print(job.data, 'log');
     }
     
     @Process(JOBS_MAPPER[QueueEnum.LOG].warn)
     warn(job: Job<LogPayloadType>) {
-        const [message, optionalParams] = this.messageBuilder(job.data);
-        console.log(message, optionalParams);
+        this.print(job.data, 'warn');
     }
     
-    private messageBuilder(data: LogPayloadType) {
-        const { fromApp, optionalParams, message } = data;
+    private print(data: LogPayloadType, type: 'log' | 'warn' | 'error') {
+        const { fromApp, jobUuid, jobName, queueName, message } = data;
+        const _fromApp = ` ${fromApp} `;
+        const _jobName = jobName ? `/${jobName}` : '';
+        const _queueName = queueName ? `/${queueName}` : '';
+        const _jobUuid = jobUuid ? `/${jobUuid}` : '';
+        const _message = message;
         
-        return [`from ${fromApp}: ${message}`, optionalParams] as [string, any[]];
+        console[type](`${_fromApp}${_queueName}${_jobName}${_jobUuid}: ${_message}`);
     }
 }

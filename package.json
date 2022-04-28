@@ -37,7 +37,7 @@
     "ansi-styles": "^6.1.0",
     "bcrypt": "^5.0.1",
     "bull": "^4.8.2",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "fastify-swagger": "^5.1.1",
@@ -52,7 +52,6 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "terminal-kit": "^2.4.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
