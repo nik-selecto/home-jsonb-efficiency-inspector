@@ -1,6 +1,10 @@
 import { PG_CONNECTION } from './pg-connection.constant';
 import { Pool } from 'pg';
 import { Module } from '@nestjs/common';
+import { config } from 'dotenv';
+import {priorityEnvArr} from "./config.module";
+
+priorityEnvArr.forEach((env) => config({ path: env }));
 
 const pgProvider = {
   provide: PG_CONNECTION,

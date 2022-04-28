@@ -26,8 +26,6 @@ export class RabbitDbCreatorProcessor {
         const {userId} = job.data;
         const dbName = `rabbit_db_${userId}`;
 
-        this.logger.log('HELLO');
-
         try {
             await this.pgPool.query(`--sql
                 create database ${dbName};
@@ -38,7 +36,8 @@ export class RabbitDbCreatorProcessor {
             return;
         }
 
-        await this.usersService.updateOne({_id: new Types.ObjectId()}, {
+
+        await this.usersService.updateOne({_id: new Types.ObjectId(userId)}, {
             $set: {
                 hasRabbitDb: true,
             },

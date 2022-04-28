@@ -27,7 +27,7 @@ export class UsersService {
         return { email: user.email, _id: user._id };
     }
 
-    async findOne(query: FilterQuery<User>, projection: Partial<(Record<keyof User, 1>) | (Record<keyof User, -1>)> = { password: -1 }, options: QueryOptions<User> = {}) {
+    async findOne(query: FilterQuery<User>, projection: Partial<(Record<keyof User, 1>) | (Record<keyof User, 0>)> = { password: 0 }, options: QueryOptions<User> = {}) {
         return this.userModel.findOne(query, projection, options).lean();
     }
 

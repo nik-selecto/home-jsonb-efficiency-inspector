@@ -13,7 +13,7 @@
     "mini:logger": "npx nodemon src/mini-apps/logger/logger.main.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "echo THIS IS APP IS NOT READY FOR PRUDUCTION! use 'npm run start:dev' or run each 'mini:*' in separate terminal",
-    "start:dev": "npx ts-node src/start.dev.ts",
+    "start:dev": "npx nodemon src/start.dev.ts",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

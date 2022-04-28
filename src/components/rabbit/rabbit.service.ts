@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, Logger} from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bull';
 import { QueueEnum } from '../../general/queue.enum';
 import { Queue } from 'bull';
@@ -11,6 +11,8 @@ import {ReadyOrJobIdType} from "../../general/ready-or-job-id.type.general";
 
 @Injectable()
 export class RabbitService {
+  private logger = new Logger(RabbitService.name);
+
   constructor(
       @InjectQueue(QueueEnum.RABBIT_DB)
       private rabbitDbQueue: Queue,
