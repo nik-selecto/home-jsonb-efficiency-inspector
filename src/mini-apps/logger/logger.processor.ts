@@ -25,25 +25,25 @@ const lineColors = {
 export class LoggerProcessor {
     @Process(JOBS_MAPPER[QueueEnum.LOG].error)
     error(job: Job<LogPayloadType>) {
-        this.print(job.data, 'error');
+        LoggerProcessor.print(job.data, 'error');
     }
 
     @Process(JOBS_MAPPER[QueueEnum.LOG].log)
     log(job: Job<LogPayloadType>) {
-        this.print(job.data, 'log');
+        LoggerProcessor.print(job.data, 'log');
     }
     
     @Process(JOBS_MAPPER[QueueEnum.LOG].warn)
     warn(job: Job<LogPayloadType>) {
-        this.print(job.data, 'warn');
+        LoggerProcessor.print(job.data, 'warn');
     }
     
-    private print(data: LogPayloadType, type: 'log' | 'warn' | 'error') {
-        const { fromApp, jobUuid, jobName, queueName, message } = data;
+    private static print(data: LogPayloadType, type: 'log' | 'warn' | 'error') {
+        const { fromApp, jobId, jobName, queueName, message } = data;
         const _fromApp = chalk.bold.italic.bgHex(appBgColors[fromApp])(` ${chalk.whiteBright(fromApp)} `);
         const _jobName = jobName ? `/${jobName}` : '';
         const _queueName = queueName ? `/${queueName}` : '';
-        const _jobUuid = jobUuid ? `/${jobUuid}` : '';
+        const _jobUuid = jobId ? `/${jobId}` : '';
         const _message = chalk.hex(lineColors[type])(message);
         
         console[type](`${_fromApp}${_queueName}${_jobName}${_jobUuid}: ${_message}`);

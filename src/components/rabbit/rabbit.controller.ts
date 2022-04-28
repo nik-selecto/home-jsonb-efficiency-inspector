@@ -1,4 +1,4 @@
-import {Body, Controller, Post, UseGuards, Request} from '@nestjs/common';
+import {Controller, Post, UseGuards, Request} from '@nestjs/common';
 import { RabbitService } from './rabbit.service';
 import {JwtAccessGuard} from "../auth/guards/jwt-access.guard";
 import {JwtPayloadType} from "../auth/jwt-payload.type";
@@ -9,8 +9,7 @@ export class RabbitController {
   constructor(private rabbitService: RabbitService) {}
 
   @Post()
-  createRabbitDb(@Body() data: { tableName: string }, @Request() req: { user: JwtPayloadType }) {
-    const {  email, id } = req.user;
-    return this.rabbitService.createRabbitDb({ ...data, userEmail: email, userId: id });
+  createRabbitDb(@Request() req: { user: JwtPayloadType }) {
+    return this.rabbitService.createRabbitDb(req.user.id, req.user._id);
   }
 }

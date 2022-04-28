@@ -20,6 +20,13 @@ export class User implements FullUserInterface {
     required: true,
   })
   password: string;
+
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  hasRabbitDb: boolean;
 }
 
 export type UserDocument = User & MongooseDocumentType<User>;

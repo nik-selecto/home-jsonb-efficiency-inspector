@@ -6,4 +6,5 @@ export interface FullUserInterface
     MongoIdInterface {
   email: string;
   password: string;
+  hasRabbitDb: boolean;
 }

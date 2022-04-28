@@ -1,7 +1,7 @@
 import { FullUserInterface } from './full-user.interface';
 import { Types } from 'mongoose';
 import {
-  IsAlphanumeric,
+  IsAlphanumeric, IsBoolean,
   IsDate,
   IsEmail,
   IsMongoId,
@@ -23,4 +23,7 @@ export class FullUserDto implements FullUserInterface {
   @IsAlphanumeric()
   @Length(8, 32)
   password: string;
+
+  @IsBoolean()
+  hasRabbitDb: boolean;
 }
