@@ -7,6 +7,8 @@ import {CreateDbProcessType} from "./types/create-db-process.type";
 import {Types} from "mongoose";
 import {UsersService} from "../users/users.service";
 import {ReadyOrJobIdType} from "../../general/ready-or-job-id.type.general";
+import {CreateTableReqDto} from "./dto/req/create-table.req.dto";
+import {CreateTableProcessType} from "./types/create-table-process.type";
 
 
 @Injectable()
@@ -27,12 +29,29 @@ export class RabbitService {
     }
 
     const queueName = QueueEnum.RABBIT_DB;
-    const jobName = JOBS_MAPPER[QueueEnum.RABBIT_DB].create;
+    const jobName = JOBS_MAPPER[QueueEnum.RABBIT_DB].createDb;
     const jobId = jobName + '__' + userId;
     const payload: CreateDbProcessType = {
       queueName,
       jobId,
       userId,
+    };
+
+    this.rabbitDbQueue.add(jobName, payload, { jobId });
+
+    return { jobId };
+  }
+
+  createTable(owner: { id: string, _id: Types.ObjectId }, data: CreateTableReqDto) {
+    const { tableName, jColumnExamples } = data;
+    const { id: userId } = owner;
+    const jobName = JOBS_MAPPER[QueueEnum.RABBIT_DB].createTable;
+    const jobId = jobName + '_' + tableName + '__' + userId;
+    const payload: CreateTableProcessType = {
+      userId,
+      tableName,
+      jColumnExamples,
+      jobId,
     };
 
     this.rabbitDbQueue.add(jobName, payload, { jobId });

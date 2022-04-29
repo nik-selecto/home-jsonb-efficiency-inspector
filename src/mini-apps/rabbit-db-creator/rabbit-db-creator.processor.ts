@@ -21,7 +21,7 @@ export class RabbitDbCreatorProcessor {
     ) {
     }
 
-    @Process(JOBS_MAPPER[QueueEnum.RABBIT_DB].create)
+    @Process(JOBS_MAPPER[QueueEnum.RABBIT_DB].createDb)
     async createDb(job: Job<CreateDbProcessType>) {
         const {userId} = job.data;
         const dbName = `rabbit_db_${userId}`;

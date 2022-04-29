@@ -3,6 +3,7 @@ import { RabbitService } from './rabbit.service';
 import {JwtAccessGuard} from "../auth/guards/jwt-access.guard";
 import {JwtPayloadType} from "../auth/jwt-payload.type";
 import {CreateTableReqDto} from "./dto/req/create-table.req.dto";
+import {Types} from "mongoose";
 
 @Controller('rabbit')
 @UseGuards(JwtAccessGuard)
@@ -17,7 +18,7 @@ export class RabbitController {
   }
 
   @Post('table')
-  createTable(@Body() data: CreateTableReqDto) {
-    this.log.warn(data);
+  createTable(@Body() data: CreateTableReqDto, @Request() req: { id: string, _id: Types.ObjectId }) {
+
   }
 }

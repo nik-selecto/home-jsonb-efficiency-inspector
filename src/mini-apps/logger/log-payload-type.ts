@@ -6,4 +6,4 @@ export type LogPayloadType = {
     message: any,
     fromApp: OurAppEnum,
     jobName: string,
-    } & Partial<JobPayloadType<QueueEnum>>;
+    } & JobPayloadType<QueueEnum>;
