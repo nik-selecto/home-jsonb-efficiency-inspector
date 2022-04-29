@@ -20,6 +20,8 @@ async function bootstrap() {
             forbidUnknownValues: true,
             skipMissingProperties: false,
             transform: true,
+            enableDebugMessages: true,
+            validateCustomDecorators: true,
         }),
     );
 
