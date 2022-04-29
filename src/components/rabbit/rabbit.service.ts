@@ -42,9 +42,15 @@ export class RabbitService {
     return { jobId };
   }
 
-  createTable(owner: { id: string, _id: Types.ObjectId }, data: CreateTableReqDto) {
+  async createTable(owner: { id: string, _id: Types.ObjectId }, data: CreateTableReqDto) {
     const { tableName, jColumnExamples } = data;
-    const { id: userId } = owner;
+    const { id: userId, _id } = owner;
+    const { tables } = await this.usersService.findOne({ _id });
+
+    if (tables.length) {
+      return 'OK';
+    }
+
     const jobName = JOBS_MAPPER[QueueEnum.RABBIT_DB].createTable;
     const jobId = jobName + '_' + tableName + '__' + userId;
     const payload: CreateTableProcessType = {
