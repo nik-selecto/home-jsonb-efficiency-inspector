@@ -10,7 +10,6 @@ export function IsValidJson(validationOptions?: ValidationOptions) {
             options: validationOptions,
             validator: {
                 validate(value: any) {
-                    console.log('hello world');
                     try {
                         JSON.parse(JSON.stringify(value));
 

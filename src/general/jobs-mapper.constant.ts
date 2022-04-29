@@ -2,8 +2,8 @@ import {QueueEnum} from "./queue.enum";
 
 export const JOBS_MAPPER = {
     [QueueEnum.RABBIT_DB]: {
-        createDb: 'create-db' as const,
-        createTable: 'create-table' as const,
+        createDb: 'create_db' as const,
+        createTable: 'create_table' as const,
     },
     [QueueEnum.LOG]: {
         error: 'error' as const,
