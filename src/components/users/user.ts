@@ -27,6 +27,12 @@ export class User implements FullUserInterface {
     default: false,
   })
   hasRabbitDb: boolean;
+
+  @Prop({
+    type: [String],
+    default: [],
+  })
+  tables: string[];
 }
 
 export type UserDocument = User & MongooseDocumentType<User>;

@@ -1,10 +1,10 @@
 import { FullUserInterface } from './full-user.interface';
 import { Types } from 'mongoose';
 import {
-  IsAlphanumeric, IsBoolean,
+  IsAlphanumeric, IsArray, IsBoolean,
   IsDate,
   IsEmail,
-  IsMongoId,
+  IsMongoId, IsString,
   Length,
 } from 'class-validator';
 
@@ -26,4 +26,8 @@ export class FullUserDto implements FullUserInterface {
 
   @IsBoolean()
   hasRabbitDb: boolean;
+
+  @IsArray()
+  @IsString({ each: true })
+  tables: string[];
 }

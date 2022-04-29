@@ -7,4 +7,5 @@ export interface FullUserInterface
   email: string;
   password: string;
   hasRabbitDb: boolean;
+  tables: string[];
 }

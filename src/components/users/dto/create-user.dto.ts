@@ -6,5 +6,6 @@ export class CreateUserDto extends OmitType(FullUserDto, [
     'updatedAt',
     '_id',
     'hasRabbitDb',
+    'tables',
 ]) {
 }
